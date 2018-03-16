@@ -19,6 +19,6 @@ private:
     const double r2 = 6.5;
     const double phi = M_PI;
     double h, V;
-    void ComputeSeries(void);
-    void computeVolume(void);
+    void ComputeSeries();
+    void computeVolume();
 };

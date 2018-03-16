@@ -16,8 +16,8 @@ public:
 private:
     int N;
     int *A;
-    void createArray(void);
-    void destroyArray(void);
+    void createArray();
+    void destroyArray();
     void printArray(int flag = 1);
     void sorting();
 };

@@ -47,7 +47,7 @@ void bubblesort::sorting() {
                 check = true;
             }
         }
-    }while(check == true);
+    }while(check);
 }
 int main(void) {
     bubblesort HW1_2;
