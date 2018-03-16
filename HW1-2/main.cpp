@@ -13,7 +13,7 @@ void bubblesort::createArray() {
     srand(time(NULL));
     for( int i = 0 ; i < N ; i++)
     {
-        A[i] = rand()%N;
+        A[i] = rand()%(3*N);
     }
 }
 void bubblesort::destroyArray() {
