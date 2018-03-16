@@ -66,7 +66,7 @@ void Euler::ComputeEuler()
 void Euler::printexact() {
     FILE *exact;
     char name[50];
-    sprintf(name, "Euler, exact.csv", dt);
+    sprintf(name, "Euler, exact.csv");
     exact = fopen(name, "w");
     fprintf(exact, "time,T\n");
     for(time = t0 ; time <= tmax ; time+=dt)
