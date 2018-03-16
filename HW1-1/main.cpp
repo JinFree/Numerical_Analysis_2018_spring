@@ -54,7 +54,7 @@ void Euler::paraclose() {
     fclose(file);
 }
 void Euler::printstat() {
-    printf("\rtime=%.2f, T=%f",time,T);
+    printf("\rdt = %.2f, time=%.2f, T=%f",dt, time,T);
 }
 int main(void) {
 	Euler HW1_1;
