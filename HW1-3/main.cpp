@@ -24,9 +24,7 @@ void HW1_3::computeVolume() {
     if( h <= 0)
         V = 0;
     else if( h <= H1)
-    {
         V = phi*r1*r1*h;
-    }
     else if( h <= H1+H2)
     {
         V = phi*r1*r1*H1;
