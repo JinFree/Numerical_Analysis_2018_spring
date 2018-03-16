@@ -4,11 +4,14 @@
 
 #ifndef HW1_3_MAIN_H
 #define HW1_3_MAIN_H
-
-#endif //HW1_3_MAIN_H
 #include <cstdio>
 #include <cmath>
+
+#endif //HW1_3_MAIN_H
 class HW1_3{
+public:
+    HW1_3(){}
+    void computeVolume(double _h);
 private:
     const double H1 = 10;
     const double H2 = 5;
@@ -18,7 +21,4 @@ private:
     double h, V;
     void ComputeSeries(void);
     void computeVolume(void);
-public:
-    HW1_3(){}
-    void computeVolume(double _h);
 };

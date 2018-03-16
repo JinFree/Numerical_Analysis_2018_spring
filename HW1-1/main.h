@@ -9,6 +9,11 @@
 
 #endif //HW1_MAIN_H
 class Euler{
+public:
+    Euler(){};
+    void ComputeEuler(double _dt);
+    void ComputeEuler();
+    void printexact();
 private:
     FILE *file;
     const double T0=70;
@@ -25,10 +30,4 @@ private:
     void parawrite();
     void paraclose();
     void printstat();
-public:
-    Euler(){};
-    Euler(double _dt);
-    void ComputeEuler(double _dt);
-    void ComputeEuler();
-    void printexact();
 };

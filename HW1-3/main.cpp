@@ -12,19 +12,15 @@ void HW1_3::ComputeSeries() {
         h += 0.1;
     }while(h<=16);
     fclose(file);
-    return;
 }
-void HW1_3::computeVolume(double _h)
-{
+void HW1_3::computeVolume(double _h) {
     h = _h;
     if( h == -1)
         ComputeSeries();
     else
         computeVolume();
-    return;
 }
-void HW1_3::computeVolume()
-{
+void HW1_3::computeVolume() {
     if( h <= 0)
         V = 0;
     else if( h <= H1)
@@ -42,8 +38,7 @@ void HW1_3::computeVolume()
     else
         V = 0;
 }
-int main()
-{
+int main() {
     HW1_3 Start;
     Start.computeVolume(-1);
     return 0;
