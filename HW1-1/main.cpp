@@ -22,11 +22,13 @@ void Euler::printexact() {
     sprintf(name, "Euler, exact.csv");
     exact = fopen(name, "w");
     fprintf(exact, "time,T\n");
-    for(time = t0 ; time <= tmax ; time+=dt)
+    for(time = t0 ; time <= tmax ; time+=0.5)
     {
         T=50*exp((-19)*time/(1000))+20;
         fprintf(exact, "%.1f,%lf\n",time,T);
+        printf("\rexact, time=%.2f, T=%lf", time, T);
     }
+    printf("\n");
     fclose(exact);
     return;
 }
@@ -58,9 +60,9 @@ void Euler::printstat() {
 }
 int main(void) {
 	Euler HW1_1;
+    HW1_1.printexact();
     HW1_1.ComputeEuler(0.5);
     HW1_1.ComputeEuler(1);
     HW1_1.ComputeEuler(2);
-    HW1_1.printexact();
     return 0;
 }
