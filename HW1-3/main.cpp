@@ -25,16 +25,19 @@ void HW1_3::computeVolume() {
         V = 0;
     else if( h <= H1)
         V = phi*r1*r1*h;
-    else if( h <= H1+H2)
-    {
+    else if( h <= H1+H2) {
         V = phi*r1*r1*H1;
         const double h1 = r1*H2/(r2-r1);
         const double hx = h+h1-H1;
         const double rx = r1*hx/h1;
         V = V+((rx*rx*hx)-(r1*r1*h1))*phi/3;
     }
-    else
-        V = 0;
+    else {
+        V = phi*r1*r1*H1;
+        const double h1 = r1*H2/(r2-r1);
+        const double h2 = H2+h1;
+        V = V+((r2*r2*h2)-r1*r1*h1)*phi/3;
+    }
 }
 int main() {
     HW1_3 Start;
