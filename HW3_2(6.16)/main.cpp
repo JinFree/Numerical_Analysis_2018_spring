@@ -5,7 +5,7 @@ double hw2::fx(double _x) {
 }
 double hw2::fpx(double _x) {
     double x = _x;
-    return 2 * x * (1 - pow(fx(x),2));
+    return -1.0* 2.0 * x * (pow(fx(x),2)-1.0);
 }
 void hw2::NewtonRaphson() {
     int iter = 0;

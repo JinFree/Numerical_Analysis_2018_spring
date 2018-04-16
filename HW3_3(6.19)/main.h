@@ -12,7 +12,7 @@ public:
     void NewtonRaphson();
 private:
     const double R = 3;
-    const double x0 = 3.2;
+    const double x0 = 3;
     const int MinIter = 3;
     const double pi = M_PI;
     double xold, xnew;

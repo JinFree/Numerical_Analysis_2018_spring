@@ -10,14 +10,13 @@
 #endif //HW3_4_6_20_MAIN_H
 class hw4{
 public:
-    void SecantMethod(double initial);
-    void fpx(double _x);
+    void FixedPointMethod(double initial);
 private:
-    double H, Hnew, Hold;
+    double H, Hnew;
     const double Q = 5;
     const double S = 0.0002;
     const double B = 20;
     const double n = 0.03;
-    double fx(double _x);
+    double gx(double _x);
     double error();
 };
