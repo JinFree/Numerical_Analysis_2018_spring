@@ -20,6 +20,6 @@ void hw4::FixedPointMethod(double initial) {
 }
 int main() {
     hw4 hw;
-    hw.FixedPointMethod(0);
+    hw.FixedPointMethod(-5);
     return 0;
 }
