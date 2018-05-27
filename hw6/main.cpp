@@ -17,15 +17,15 @@ double hw2115::Compute() {
     return result;
 }
 void hw2115::TripleIntegral13() {
-    result = (4.0/27.0) * (\
-           F(x0, y0, z0) + 4.0 * F(x1, y0, z0) + F(x2, y0, z0) +\
-    4.0 * (F(x0, y1, z0) + 4.0 * F(x1, y1, z0) + F(x2, y1, z0))+\
-           F(x0, y2, z0) + 4.0 * F(x1, y2, z0) + F(x2, y2, z0) +\
-    4.0 * (F(x0, y0, z1) + 4.0 * F(x1, y0, z1) + F(x2, y0, z1) +\
-    4.0 * (F(x0, y1, z1) + 4.0 * F(x1, y1, z1) + F(x2, y1, z1))+\
-           F(x0, y2, z1) + 4.0 * F(x1, y2, z1) + F(x2, y2, z1))+\
-           F(x0, y0, z2) + 4.0 * F(x1, y0, z2) + F(x2, y0, z2) +\
-    4.0 * (F(x0, y1, z2) + 4.0 * F(x1, y1, z2) + F(x2, y1, z2))+\
+    result = (4.0/27.0) * (
+           F(x0, y0, z0) + 4.0 * F(x1, y0, z0) + F(x2, y0, z0) +
+    4.0 * (F(x0, y1, z0) + 4.0 * F(x1, y1, z0) + F(x2, y1, z0))+
+           F(x0, y2, z0) + 4.0 * F(x1, y2, z0) + F(x2, y2, z0) +
+    4.0 * (F(x0, y0, z1) + 4.0 * F(x1, y0, z1) + F(x2, y0, z1) +
+    4.0 * (F(x0, y1, z1) + 4.0 * F(x1, y1, z1) + F(x2, y1, z1))+
+           F(x0, y2, z1) + 4.0 * F(x1, y2, z1) + F(x2, y2, z1))+
+           F(x0, y0, z2) + 4.0 * F(x1, y0, z2) + F(x2, y0, z2) +
+    4.0 * (F(x0, y1, z2) + 4.0 * F(x1, y1, z2) + F(x2, y1, z2))+
            F(x0, y2, z2) + 4.0 * F(x1, y2, z2) + F(x2, y2, z2));
 }
 double hw2115::F(double x, double y, double z) {
@@ -35,7 +35,6 @@ void hw2115::Error(double exact) {
     error = (exact - result)/exact * 100.0;
     printf("Error is %.6f\n", error);
 }
-
 double hw2126::Compute() {
     f00 = -2.0;
     f40 = -1.0;
@@ -56,12 +55,11 @@ double hw2126::Compute() {
     return result;
 }
 void hw2126::DoubleIntegral() {
-    result = f00 + 4.0 * f02 + f04 + \
-      3.0 * (f40 + 4.0 * f42 + f44)+ \
-      3.0 * (f80 + 4.0 * f82 + f84)+ \
+    result = f00 + 4.0 * f02 + f04 +
+      3.0 * (f40 + 4.0 * f42 + f44)+
+      3.0 * (f80 + 4.0 * f82 + f84)+
              f120 + 4.0 * f122 + f124;
 }
-
 void hw2417::Compute() {
     double F[11] = {0, 1.8, 2, 4, 4, 6, 4, 3.6, 3.4, 2.8, 0};
     Trapezoidal(F);
@@ -74,8 +72,7 @@ void hw2417::Compute() {
 void hw2417::Simpsons13(double *F) {
     int i;
     ResultS = 0;
-    for( i = 0 ; i < 5 ; i++)
-    {
+    for( i = 0 ; i < 5 ; i++) {
         int pos = 2 * i + 1;
         ResultS += (2.0/3.0)*(F[pos-1]+4.0*F[pos]+F[pos+1]);
     }
@@ -84,18 +81,15 @@ void hw2417::Trapezoidal(double *F) {
     int i;
     ResultT1 = 0;
     ResultT2 = 0;
-    for(i = 0 ; i < 10 ; i++)
-    {
+    for(i = 0 ; i < 10 ; i++) {
         int pos = i;
         ResultT1 += F[pos] + F[pos+1];
     }
-    for(i = 0 ; i < 5 ; i++)
-    {
+    for(i = 0 ; i < 5 ; i++) {
         int pos = 2 * i + 1;
         ResultT2 += 2.0*(F[pos+1]+F[pos-1]);
     }
 }
-
 void hw2446::Compute() {
     u = 1800;
     m = 160000;
@@ -110,7 +104,7 @@ void hw2446::Compute() {
     _n = 6;
     ResultT = Trapezoidal(_n, _a, _b);
     ResultS = Simpsons13(_n, _a, _b);
-    ResultG = GaussQuadrature();
+    ResultG = GaussQuadrature(_a, _b);
     ResultR = Romberg(_a, _b, 3);
     printf("\nProb 24.46\n");
     printf("Trapezoidal, Result is %.6f\n", ResultT);
@@ -144,8 +138,30 @@ double hw2446::Simpsons13(int n, int a, int b) {
     sum += F(b);
     return sum * h / 3.0;
 }
-double hw2446::GaussQuadrature() {
-
+double hw2446::GaussQuadrature(int a, int b) {
+    double C[6] = {
+            0.1713245,
+            0.3607616,
+            0.4679139,
+            0.4679139,
+            0.3607616,
+            0.1713245
+    };
+    double X[6] = {
+            -0.932469514,
+            -0.661209386,
+            -0.238619186,
+            0.238619186,
+            0.661209386,
+            0.932469514
+    };
+    double m = -0.5*a + 0.5*b;
+    double c = 0.5*a + 0.5*b;
+    double sum = 0;
+    for( int i=0;i<6;i++) {
+        sum += C[i] * F(m*X[i]+c);
+    }
+    return m*sum;
 }
 double hw2446::Romberg(int a, int b, int maxit) {
     double I[4][4];
@@ -156,8 +172,7 @@ double hw2446::Romberg(int a, int b, int maxit) {
         iter++;
         n = (int)pow(2.0, (double)iter);
         I[iter][0] = Trapezoidal(n, a, b);
-        for (int k=2; k<=iter+1;k++)
-        {
+        for (int k=2; k<=iter+1;k++) {
             int j = 2 + iter - k;
             I[j-1][k-1] = (pow(4.0,double(k-1))*I[j][k-2]-I[j-1][k-2])/(pow(4.0,double(k-1))-1.0);
         }
@@ -173,8 +188,7 @@ void hw2446::Differentiation() {
     double t_end = 30.0;
     double dt = 0.1;
     int t_step = (int)(t_end/dt);
-    for(int i= 0 ; i < t_step ; i++)
-    {
+    for(int i= 0 ; i < t_step ; i++) {
         double t = i*dt;
         double a = (F(t+dt)-F(t))/dt;
         fprintf(fp, "%f,%f\n", a, t);

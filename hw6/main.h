@@ -33,7 +33,7 @@ public:
 private:
     double Trapezoidal(int n, int a, int b);
     double Simpsons13(int n, int a, int b);
-    double GaussQuadrature();
+    double GaussQuadrature(int a, int b);
     double Romberg(int a, int b, int maxit);
     void Differentiation();
     double F(double t);
