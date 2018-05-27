@@ -1,13 +1,6 @@
-//
-// Created by 왕진영 on 2018. 5. 26..
-//
-
-#ifndef HW6_MAIN_H
-#define HW6_MAIN_H
 #include <cstdio>
 #include <cmath>
 #include <cstdlib>
-#endif //HW6_MAIN_H
 class hw2115 {
 public:
     double Compute();
