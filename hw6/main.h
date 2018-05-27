@@ -38,13 +38,13 @@ class hw2446 {
 public:
     void Compute();
 private:
-    void Trapezoidal();
-    void Simpsons13();
-    void GaussQuadrature();
-    void Romberg();
+    double Trapezoidal(int n, int a, int b);
+    double Simpsons13(int n, int a, int b);
+    double GaussQuadrature();
+    double Romberg(int a, int b, int maxit);
     void Differentiation();
     double F(double t);
     double u, m, q, g;
     double ResultT, ResultS, ResultG, ResultR;
-    int a, b, n, h;
+    int _a, _b, _n;
 };

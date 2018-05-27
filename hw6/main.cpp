@@ -105,14 +105,13 @@ void hw2446::Compute() {
     ResultS=0.0;
     ResultG=0.0;
     ResultR=0.0;
-    a = 0;
-    b = 30;
-    n = 6;
-    h = (b-a)/n;
-    Trapezoidal();
-    Simpsons13();
-    GaussQuadrature();
-    Romberg();
+    _a = 0;
+    _b = 30;
+    _n = 6;
+    ResultT = Trapezoidal(_n, _a, _b);
+    ResultS = Simpsons13(_n, _a, _b);
+    ResultG = GaussQuadrature();
+    ResultR = Romberg(_a, _b, 3);
     printf("\nProb 24.46\n");
     printf("Trapezoidal, Result is %.6f\n", ResultT);
     printf("Simpson's 1/3, Result is %.6f\n", ResultS);
@@ -120,34 +119,50 @@ void hw2446::Compute() {
     printf("O(h^8) Romberg, Result is %.6f\n", ResultR);
     Differentiation();
 }
-void hw2446::Trapezoidal() {
-    int i=0;
-    ResultT = F(i*h);
-    for( i = 1 ; i < n ; i++)
-    {
-        ResultT += 2.0* F(i*h);
+double hw2446::Trapezoidal(int n, int a, int b) {
+    double h = double(b - a)/(double)n;
+    double x = a;
+    double sum = F(x);
+    for (int i = 1 ; i < n ; i++) {
+        x = x+h;
+        sum += 2 * F(x);
     }
-    ResultT += F(i*h);
-    ResultT = 0.5*h*ResultT;
+    sum += F(b);
+    return h * 0.5 * sum;
 }
-void hw2446::Simpsons13() {
-    int i = 0;
-    ResultS = F(i*h);
-    for ( i = 1 ; i < n ; i++)
-    {
+double hw2446::Simpsons13(int n, int a, int b) {
+    double h = double(b - a)/(double)n;
+    double x = a;
+    double sum = F(x);
+    for ( int i = 1 ; i < n ; i++) {
+        x = x+h;
         if(i%2 ==1)
-            ResultS += 4.0*F(i*h);
+            sum += 4.0*F(x);
         else
-            ResultS += 2.0*F(i*h);
+            sum += 2.0*F(x);
     }
-    ResultS += F(i*h);
-    ResultS = ResultS*h/3.0;
+    sum += F(b);
+    return sum * h / 3.0;
 }
-void hw2446::GaussQuadrature() {
+double hw2446::GaussQuadrature() {
 
 }
-void hw2446::Romberg() {
-
+double hw2446::Romberg(int a, int b, int maxit) {
+    double I[4][4];
+    int n = 1;
+    I[0][0] = Trapezoidal(n, a, b);
+    int iter = 0;
+    do{
+        iter++;
+        n = (int)pow(2.0, (double)iter);
+        I[iter][0] = Trapezoidal(n, a, b);
+        for (int k=2; k<=iter+1;k++)
+        {
+            int j = 2 + iter - k;
+            I[j-1][k-1] = (pow(4.0,double(k-1))*I[j][k-2]-I[j-1][k-2])/(pow(4.0,double(k-1))-1.0);
+        }
+    }while(iter < maxit);
+    return I[0][iter];
 }
 void hw2446::Differentiation() {
     FILE *fp;
@@ -157,7 +172,7 @@ void hw2446::Differentiation() {
     fprintf(fp, "Acceleration,Time\n");
     double t_end = 30.0;
     double dt = 0.1;
-    int t_step = t_end/dt;
+    int t_step = (int)(t_end/dt);
     for(int i= 0 ; i < t_step ; i++)
     {
         double t = i*dt;
