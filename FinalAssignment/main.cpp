@@ -191,7 +191,7 @@ void Prob3::Compute(double _dt) {
     printf("x_end = %fm\n", xf);
     printf("y_numerical = %.13fm\n", yi[0]);
     printf("y_analytical = %.13fm\n", yi[1]);
-    printf("L2_error = %.13f\n", L2(yi[0],yi[1]));
+    printf("relative_error = %.13f\n", Error(yi[0],yi[1]));
     free(yi);
 }
 double Prob3::RK4Main(int n, double xi, double *yi, double x_end, double dx) {
@@ -199,19 +199,19 @@ double Prob3::RK4Main(int n, double xi, double *yi, double x_end, double dx) {
     int iter = 0;
     FILE *file;
     file = fopen(name, "w");
-    fprintf(file, "x,y_numerical,y_analytical,L2\n");
+    fprintf(file, "x,y_numerical,y_analytical,relative_error\n");
     double* y = (double *)malloc(n * sizeof(double));
     for(int i = 0 ; i < n ; i++) {
         y[i] = yi[i];
     }
     double y_a = Analytical(x);
-    fprintf(file, "%f,%.13f,%.13f,%.13f\n", x, y[0], y_a, L2(y[0],y_a));
+    fprintf(file, "%f,%.13f,%.13f,%.13f\n", x, y[0], y_a, Error(y[0],y_a));
     do{
         double h = dx;
         x = Integrator(x, y, n, h, x_end);
         iter++;
         y_a = Analytical(x);
-        fprintf(file, "%.13f,%.13f,%.13f,%.13f\n", x, y[0], y_a, L2(y[0],y_a));
+        fprintf(file, "%.13f,%.13f,%.13f,%.13f\n", x, y[0], y_a, Error(y[0],y_a));
     }while((x < x_end));
     yi[0]=y[0];
     yi[1]=Analytical(x);
@@ -269,7 +269,7 @@ void Prob3::Derivs(double x, double *y, double *dy) {
 double Prob3::Analytical(double x) {
     return (P*x*x)/(2.0*E*I)*(-1.0*L + x / 3.0);
 }
-double Prob3::L2(double y_n, double y_a) {
+double Prob3::Error(double y_n, double y_a) {
     if(y_a == 0)
         return y_a-y_n;
     return (y_a-y_n)/y_a*100.0;

@@ -47,7 +47,7 @@ private:
     double RK4(double x, double* y, int n, double h);
     void Derivs(double x, double* y, double *dy);
     double Analytical(double x);
-    double L2(double y_n, double y_a);
+    double Error(double y_n, double y_a);
     char name[50];
     double dx;
     double x_end;
