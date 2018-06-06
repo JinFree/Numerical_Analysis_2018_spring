@@ -307,7 +307,6 @@ double Prob4::RK4Main(int n, double xi, double *yi, double x_end, double dx) {
             y[0] = 0.0;
             break;
         }
-        printf("y=%f, A=%f\n", y[0], Area(y[0]));
         iter++;
         fprintf(file, "%f,%f\n", x, y[0]);
     }while(y[0]>=0.0);
