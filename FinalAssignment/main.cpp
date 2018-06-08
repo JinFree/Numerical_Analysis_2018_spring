@@ -5,7 +5,7 @@ void Prob1::Compute(double _dt, double _t_end) {
     int n = 2;
     double rho = 1.3;
     double d = 0.22;
-    double A = M_PI * d * d;
+    double A = 0.25 * M_PI * d * d;
     double Cd = 0.52;
     cd = 0.5*rho*A*Cd;
     double xi = 0.0;
@@ -16,8 +16,8 @@ void Prob1::Compute(double _dt, double _t_end) {
     double xf = RK4Main(n, xi, yi, x_end, dx);
     printf("\nProb 25.25\n");
     printf("Time = %fs\n", xf);
-    printf("Velocity = %f\n", yi[0]);
-    printf("Height = %f\n", yi[1]);
+    printf("Velocity = %fm/s\n", yi[0]);
+    printf("Height = %fm\n", yi[1]);
     free(yi);
 }
 double Prob1::RK4Main(int n, double xi, double *yi, double x_end, double dx) {
@@ -188,10 +188,10 @@ void Prob3::Compute(double _dt) {
     sprintf(name, "Prob28.26, dx=%.3f.csv", dx);
     double xf = RK4Main(n, xi, yi, x_end, dx);
     printf("\nProb 28.26\n");
-    printf("x_end = %fm\n", xf);
-    printf("y_numerical = %.13fm\n", yi[0]);
-    printf("y_analytical = %.13fm\n", yi[1]);
-    printf("relative_error = %.13f\n", Error(yi[0],yi[1]));
+    printf("x_end = %fin\n", xf);
+    printf("y_numerical = %fin\n", yi[0]);
+    printf("y_analytical = %fin\n", yi[1]);
+    printf("relative_error = %f%%\n", Error(yi[0],yi[1]));
     free(yi);
 }
 double Prob3::RK4Main(int n, double xi, double *yi, double x_end, double dx) {
@@ -205,13 +205,13 @@ double Prob3::RK4Main(int n, double xi, double *yi, double x_end, double dx) {
         y[i] = yi[i];
     }
     double y_a = Analytical(x);
-    fprintf(file, "%f,%.13f,%.13f,%.13f\n", x, y[0], y_a, Error(y[0],y_a));
+    fprintf(file, "%f,%f,%f,%.13f\n", x, y[0], y_a, Error(y[0],y_a));
     do{
         double h = dx;
         x = Integrator(x, y, n, h, x_end);
         iter++;
         y_a = Analytical(x);
-        fprintf(file, "%.13f,%.13f,%.13f,%.13f\n", x, y[0], y_a, Error(y[0],y_a));
+        fprintf(file, "%f,%f,%f,%.13f\n", x, y[0], y_a, Error(y[0],y_a));
     }while((x < x_end));
     yi[0]=y[0];
     yi[1]=Analytical(x);
@@ -274,7 +274,6 @@ double Prob3::Error(double y_n, double y_a) {
         return y_a-y_n;
     return (y_a-y_n)/y_a*100.0;
 }
-
 void Prob4::Compute(double _dt, double _t_end) {
     dx = _dt;
     x_end = _t_end;
@@ -294,12 +293,12 @@ double Prob4::RK4Main(int n, double xi, double *yi, double x_end, double dx) {
     int iter = 0;
     FILE *file;
     file = fopen(name, "w");
-    fprintf(file, "Time,Height\n");
+    fprintf(file, "Time,Height,Area\n");
     double* y = (double *)malloc(n * sizeof(double));
     for(int i = 0 ; i < n ; i++) {
         y[i] = yi[i];
     }
-    fprintf(file, "%f,%f\n", x, y[0]);
+    fprintf(file, "%f,%f,%f\n", x, y[0],Area(y[0]));
     do{
         double h = dx;
         x = Integrator(x, y, n, h, x_end);
@@ -308,7 +307,7 @@ double Prob4::RK4Main(int n, double xi, double *yi, double x_end, double dx) {
             break;
         }
         iter++;
-        fprintf(file, "%f,%f\n", x, y[0]);
+        fprintf(file, "%f,%f,%f\n", x, y[0],Area(y[0]));
     }while(y[0]>=0.0);
     for(int i = 0 ; i < n ; i++) {
         yi[i] = y[i];
@@ -363,7 +362,6 @@ void Prob4::Derivs(double x, double *y, double *dy) {
     dy[0] = (-1.0*M_PI*d*d)/(4.0*Area(y1))*(sqrt(2.0*g*(y1+e)));
 }
 double Prob4::Area(double x) {
-    IndexInit();
     for(int i = 0 ; i < 7 ; i++) {
         if((H[i]<=x+0.01)&&(x-0.01<=H[i+1])) {
             double x0, x1, y0, y1;
@@ -376,18 +374,6 @@ double Prob4::Area(double x) {
     }
     return 0;
 }
-void Prob4::IndexInit() {
-    for(int i = 0 ; i < 7 ; i++) {
-        H[i] = i;
-    }
-    A[0] = 0.0;
-    A[1] = 0.18;
-    A[2] = 0.32;
-    A[3] = 0.45;
-    A[4] = 0.67;
-    A[5] = 0.97;
-    A[6] = 1.17;
-}
 int main() {
     Prob1 Hw1;
     Hw1.Compute(0.01, 10);
@@ -399,6 +385,6 @@ int main() {
     Hw3.Compute(0.01);
 
     Prob4 Hw4;
-    Hw4.Compute(0.0001, 10);
+    Hw4.Compute(0.01, 10);
     return 0;
 }

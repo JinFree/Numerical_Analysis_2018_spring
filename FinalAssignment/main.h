@@ -51,10 +51,10 @@ private:
     char name[50];
     double dx;
     double x_end;
-    double E = 30000.0;
+    double E = 30.0*pow(10.0,6);
     double I = 800.0;
-    double P = 1.0;
-    double L = 10.0;
+    double P = 1000.0;
+    double L = 120.0;
 };
 class Prob4 {
 public:
@@ -65,13 +65,12 @@ private:
     double RK4(double x, double* y, int n, double h);
     void Derivs(double x, double* y, double *dy);
     double Area(double x);
-    void IndexInit();
     char name[50];
     double dx;
     double x_end;
     double d = 0.25;
     double e = 1.0;
     double g = 9.81;
-    double A[7];
-    double H[7];
+    double A[7] = {0.0, 0.18, 0.32, 0.45, 0.67, 0.97, 1.17};
+    double H[7] = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
 };
